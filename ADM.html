@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Painel do Administrador — Alysson Barbearia</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marko+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+  <header class="top-header">
+    <div class="container nav-bar">
+      <div class="logo"><img src="/imagens/Imagem do WhatsApp de 2025-10-22 à(s) 11.27.28_aae78c23.jpg" alt="" height="100px" width="100px"></div>
+      <div class="brand">
+        <h1>Admin • Alysson Luiz Barbearia</h1>
+        <span class="small">Painel de agendamentos (restante de 2025)</span>
+      </div>
+      <nav>
+        <a href="principal.html" class="btn">Ir para site</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Área de login: visível por padrão -->
+    <section id="login-section" class="card small-center">
+      <h3>🔐 Login do Administrador</h3>
+      <form id="login-form" class="form-grid" autocomplete="off">
+        <label for="user">Usuário</label>
+        <input id="user" type="text" placeholder="admin" required />
+        <label for="pass">Senha</label>
+        <input id="pass" type="password" placeholder="1234" required />
+        <div class="actions">
+          <button type="submit" class="btn">Entrar</button>
+        </div>
+        <p class="small" style="color:#ccc;margin-top:8px;">Credenciais de teste: <strong>admin</strong> / <strong>1234</strong></p>
+      </form>
+    </section>
+
+    <!-- Painel administrativo: escondido até login -->
+    <section id="panel-section" class="card" style="display:none;">
+      <div class="flex-between">
+        <h3>📋 Calendário — Out / Nov / Dez 2025</h3>
+        <div>
+          <button id="logout" class="btn secondary">Sair</button>
+          <button id="botao-atualizar" class="btn">Atualizar</button>
+        </div>
+      </div>
+
+      <!-- Controle de mês: permite navegar entre out/nov/dez -->
+      <div class="month-controls" style="margin-top:12px; display:flex; gap:8px; align-items:center;">
+        <button id="mes-anterior" class="btn secondary">◀</button>
+        <div id="nome-do-mes" style="min-width:180px; text-align:center; font-weight:600;"></div>
+        <button id="mes-proximo" class="btn secondary">▶</button>
+      </div>
+
+      <div id="calendar" class="calendar" style="margin-top:12px;"></div>
+
+      <div id="day-details" class="card" style="margin-top:16px; display:none;"></div>
+    </section>
+  </main>
+
+  <script src="/javascript/app.js"></script>
+  <script>
+    // Login simples e controle do painel (usa funções do arquivo JS)
+    (function(){
+      const formLogin = document.getElementById('login-form');
+      const telaLogin = document.getElementById('login-section');
+      const painel = document.getElementById('panel-section');
+      const botaoSair = document.getElementById('logout');
+      const botaoAtualizar = document.getElementById('botao-atualizar');
+      const botaoMesAnterior = document.getElementById('mes-anterior');
+      const botaoMesProximo = document.getElementById('mes-proximo');
+
+      formLogin.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const usuario = document.getElementById('user').value.trim();
+        const senha = document.getElementById('pass').value.trim();
+        // Credenciais de demonstração: admin / 1234
+        if (usuario === 'admin' && senha === '1234') {
+          telaLogin.style.display = 'none';
+          painel.style.display = 'block';
+          // mostra calendário (função no JS)
+          if (window.mostrarCalendarioAdministrador) window.mostrarCalendarioAdministrador();
+        } else {
+          alert('Usuário ou senha incorretos!');
+        }
+      });
+
+      botaoSair.addEventListener('click', () => {
+        painel.style.display = 'none';
+        telaLogin.style.display = 'block';
+        document.getElementById('login-form').reset();
+        document.getElementById('day-details').style.display = 'none';
+      });
+
+      botaoAtualizar.addEventListener('click', () => {
+        if (window.mostrarCalendarioAdministrador) window.mostrarCalendarioAdministrador();
+        if (window.mostrarDetalhesDoDia) {
+          const detalhe = document.getElementById('day-details');
+          if (detalhe.dataset.date) window.mostrarDetalhesDoDia(detalhe.dataset.date);
+        }
+      });
+
+      botaoMesAnterior.addEventListener('click', () => {
+        if (window.mudarMesAtual) window.mudarMesAtual(-1);
+      });
+      botaoMesProximo.addEventListener('click', () => {
+        if (window.mudarMesAtual) window.mudarMesAtual(1);
+      });
+
+      // Atualiza automaticamente se o localStorage mudar em outra aba
+      window.addEventListener('storage', (e) => {
+        if (e.key === 'agenda_demo_barbearia') {
+          if (painel.style.display === 'block' && window.mostrarCalendarioAdministrador) window.mostrarCalendarioAdministrador();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

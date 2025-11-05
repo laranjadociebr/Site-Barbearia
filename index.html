@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Alysson Barbearia — Agendar</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marko+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+  
+</head>
+
+<body>
+  <header class="top-header">
+    <div class="container nav-bar">
+      <div class="logo"><img src="/imagens/Imagem do WhatsApp de 2025-10-22 à(s) 11.27.28_aae78c23.jpg" alt=""
+          height="100px" width="100px"></div>
+      <div class="brand">
+
+        <h1>Alysson Luiz Barbearia</h1>
+        <a href="https://maps.app.goo.gl/bGKsryvndEshQBQQA" target="_blank"> 
+          <span class="small"> Av. Rural, 1665 — Jardim Brasília • (34) 99175-4147</span> 
+        </a>
+        
+      </div>
+      <nav>
+        <a href="ADM.html" class="btn dark">Área ADM</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <div class="slider">
+      <div class="slides">
+
+      </div>
+    </div>
+
+    <section class="hero card">
+      <h2>Agende seu horário</h2>
+      <p class="small">Escolha uma data (domingo não permitido) e um horário disponível.</p>
+    </section>
+
+    <section id="agendamento" class="card">
+      <h3>📅 Formulário de Agendamento</h3>
+
+      <form id="form-agenda" class="form-grid" autocomplete="off">
+        <!-- Nome do cliente -->
+        <label for="nome">Nome completo</label>
+        <input id="nome" name="nome" type="text" placeholder="Ex.: João Silva" required/>
+
+        <!-- Telefone -->
+        <label for="telefone">Telefone</label>
+        <input id="telefone" name="telefone" type="tel" placeholder="(34) 9xxxx-xxxx" required pattern="[0-9]{10,11}"
+          inputmode="numeric" />
+
+        <!-- Serviço -->
+        <label for="servico">Serviço</label>
+        <select id="servico" name="servico" required>
+          <option value="Corte">Corte</option>
+          <option value="Barba">Barba</option>
+          <option value="Corte + Barba">Corte + Barba</option>
+          <option value="Coloração">Coloração</option>
+        </select>
+
+        <!-- Data: limitado a 2025-10-01 .. 2025-12-31 -->
+        <label for="data">Data</label>
+        <input id="data" name="data" type="date" required />
+
+        <!-- Horário: preenchido pelo JS -->
+        <label for="hora">Horário</label>
+        <select id="hora" name="hora" required>
+          <option value="">Selecione uma data</option>
+        </select>
+
+        <div class="actions">
+          <button type="submit" class="btn">Confirmar agendamento</button>
+          <button type="reset" id="limpar" class="btn secondary">Limpar</button>
+        </div>
+
+        <p id="msg" class="small" aria-live="polite" style="margin-top:8px;color:#ddd;"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+
+  </footer>
+
+  <footer>
+    <div class="container-footer">
+
+      <ul class="footer-title1">
+        <img class="footer-logo" src="../imagens/Imagem do WhatsApp de 2025-10-22 à(s) 11.27.28_aae78c23.jpg">
+        <li class="footer-title"> <b>Alysson Luiz Barbearia</b></li>
+        <p class="small">© 2025 Alysson Luiz Barbearia — Protótipo</p>
+      </ul>
+      <ul class="footer-title2">
+        <li class=""> <b>Siga-nos:</b> </li>
+        <a href="https://www.instagram.com/alyssonluizbarbearia?igsh=cjI3MXc4Ym9kY3g1" target="_blank">
+          <img class="logoinsta" src="../imagens/instagramlogo.png">
+        </a>
+
+      </ul>
+    </div>
+  </footer>
+
+  <script src="/javascript/app.js"></script>
+  <script>
+    // Inicialização visual/específica da página cliente.
+    (function () {
+      const campoData = document.getElementById('data');
+      // limites: 1 out 2025 -> 31 dez 2025
+      campoData.min = '2025-10-01';
+      campoData.max = '2025-12-31';
+
+      // Ao mudar a data: bloqueia domingo e atualiza horários
+      campoData.addEventListener('change', () => {
+        const valor = campoData.value;
+        if (!valor) return;
+        const d = new Date(valor + 'T00:00:00');
+        if (d.getDay() === 0) { // domingo
+          alert('Domingo não é permitido. Escolha outra data.');
+          campoData.value = '';
+          const mensagem = document.getElementById('msg');
+          if (mensagem) mensagem.textContent = 'Domingos bloqueados.';
+          // atualiza select de horas para estado vazio
+          if (window.atualizarListaDeHorarios) window.atualizarListaDeHorarios('');
+          return;
+        }
+        // atualiza horários (função no JS principal)
+        if (window.atualizarListaDeHorarios) window.atualizarListaDeHorarios(valor);
+      });
+
+      // Preenche horários na carga inicial (sem data selecionada)
+      document.addEventListener('DOMContentLoaded', () => {
+        if (window.atualizarListaDeHorarios) window.atualizarListaDeHorarios('');
+      });
+    })();
+
+    const telefoneInput = document.getElementById("telefone"); /* Mudança (input numero) BY: Matheus */
+
+    telefoneInput.addEventListener("input", function () {
+      this.value = this.value.replace(/\D/g, "");
+    });
+
+    const input = document.getElementById('nome');    /* Mudança (input letra) BY: Matheus */
+
+    input.addEventListener('input', () => {
+    input.value = input.value.replace(/[^A-Za-zÀ-ÿ\s]/g, '');
+});
+
+  </script>
+</body>
+
+</html>
