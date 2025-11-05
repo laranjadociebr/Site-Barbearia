@@ -32,6 +32,7 @@ body{
   max-width:1100px;
   margin:0 auto;
   padding:22px;
+
 }
 
 /* Cabeçalho */
@@ -215,6 +216,73 @@ span{
 
 a{
   text-decoration: none;
+}
+
+.aaa{
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 5rem;
+}
+
+.container-photo{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slider{
+    overflow: hidden;
+    position: relative;
+    height: 30rem;
+    width: 30rem;
+}
+
+.slides{
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: all 1s;
+}
+
+.slides img{
+  width: 29rem;
+  height: 30rem;
+  margin: 0 2rem;
+  object-fit: cover;
+}
+
+.dots {
+  position: absolute;
+  bottom: 5%;
+  left: 53.7%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1.75rem;
+}
+
+.dots_dot{
+  border: none;
+  background-color: #fff;
+  opacity: 0.7;
+  height: 1rem;
+  width: 1rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all .5s;
+}
+
+.titulo-desc{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+      text-shadow: 0 0 10px #d4af37,
+                   0 0 20px #d4af37,
+                   0 0 40px #ffffff,
+                   0 0 80px #ffffff;
+}
+
+.hero{
+  margin-top: 5rem;
 }
 
 
