@@ -25,6 +25,7 @@ body{
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
   min-height:100vh;
+
 }
 
 /* Container central */
@@ -228,6 +229,7 @@ a{
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 4rem;
 }
 
 .slider{
@@ -283,6 +285,127 @@ a{
 
 .hero{
   margin-top: 5rem;
+}
+
+
+/* Container Principal com Flexbox para 4 colunas */
+.pricing-container {
+    display: flex;
+    justify-content: center; /* Centraliza os cards na tela */
+    gap: 20px; /* Espaço entre os cards */
+    flex-wrap: wrap; /* Quebra para a linha de baixo em telas pequenas */
+    max-width: 1200px; /* Largura máxima do container */
+    margin: 0 auto;
+}
+
+/* Estilo do Card Individual */
+.pricing-card {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex-basis: 250px; /* Largura base para cada card */
+    flex-grow: 1; /* Permite que cresçam para preencher o espaço */
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.pricing-card:hover {
+    transform: translateY(-5px); /* Efeito de elevação ao passar o mouse */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Card em Destaque (Plano Essencial) */
+.pricing-card.featured {
+    border-color: #d4af37; /* Borda de destaque */
+    background-color: #e6f2ff; /* Fundo levemente azul */
+}
+
+/* Título do Plano */
+.pricing-card h3 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Estilo do Preço */
+.price {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #d4af37;
+    margin-bottom: 25px;
+}
+
+.price span {
+    font-size: 0.5em;
+    font-weight: normal;
+    color: #666;
+}
+
+/* Lista de Recursos */
+.pricing-card ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.pricing-card li {
+    padding: 10px 0;
+    border-bottom: 1px dotted #eee;
+    color: #555;
+    font-size: 0.95em;
+}
+
+.pricing-card li:last-child {
+    border-bottom: none;
+}
+
+/* Botão de Ação */
+.btn2 {
+    display: block;
+    padding: 12px 20px;
+    background-color: #333;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+.btn2:hover {
+    background-color: #555;
+}
+
+/* Botão de Destaque */
+.btn-featured {
+    background-color: #d4af37;
+}
+
+.btn-featured:hover {
+    background-color: #d4af37;
+}
+
+/* Responsividade (Para telas menores) */
+@media (max-width: 1100px) {
+    .pricing-container {
+        flex-direction: column; /* Empilha os cards em telas menores */
+        align-items: center;
+    }
+    .pricing-card {
+        width: 80%; /* Ocupa 80% da largura em telas menores */
+        max-width: 400px;
+    }
+}
+
+.lista-desc{
+  font-family: Roboto Mono;
+}
+
+html{
+  scroll-behavior: smooth;
 }
 
 

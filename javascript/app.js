@@ -18,7 +18,7 @@ const CHAVE_ARMAZENAMENTO = 'agenda_demo_barbearia';
 
 // Lista de horários fixos que a barbearia oferece (modelo)
 const LISTA_DE_HORARIOS_FIXOS = [
-  '09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00'
+  '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'
 ];
 
 // Meses permitidos (0-index): outubro=9, novembro=10, dezembro=11
@@ -92,7 +92,7 @@ function ehDomingo(dataISO) {
  *
  * Esta função é atribuída a window para poder ser chamada no HTML.
  */
-window.atualizarListaDeHorarios = function(dataISO) {
+window.atualizarListaDeHorarios = function (dataISO) {
   const selectHora = document.getElementById('hora');
   const mensagem = document.getElementById('msg');
   if (!selectHora) return;
@@ -155,7 +155,7 @@ window.atualizarListaDeHorarios = function(dataISO) {
 
 /* ===================== FORMULÁRIO CLIENTE (SUBMISSÃO) ===================== */
 
-(function inicializarFormularioCliente(){
+(function inicializarFormularioCliente() {
   const form = document.getElementById('form-agenda');
   if (!form) return;
 
@@ -239,7 +239,7 @@ let mesAtualExibido = 9; // começamos em outubro por padrão
  * delta = +1 para próximo mês, -1 para mês anterior
  * limita navegação entre outubro e dezembro de 2025
  */
-window.mudarMesAtual = function(delta) {
+window.mudarMesAtual = function (delta) {
   const novo = mesAtualExibido + delta;
   if (MESES_PERMITIDOS.includes(novo)) {
     mesAtualExibido = novo;
@@ -253,7 +253,7 @@ window.mudarMesAtual = function(delta) {
  * Dias domingos são mostrados como placeholder (não clicáveis).
  * Dias com agendamento ficam destacados (occupied).
  */
-window.mostrarCalendarioAdministrador = function() {
+window.mostrarCalendarioAdministrador = function () {
   const container = document.getElementById('calendar');
   if (!container) return;
 
@@ -273,8 +273,8 @@ window.mostrarCalendarioAdministrador = function() {
 
   // Gera os dias do mês
   for (let dia = 1; dia <= totalDias; dia++) {
-    const diaStr = String(dia).padStart(2,'0');
-    const dataISO = `${ano}-${String(mes + 1).padStart(2,'0')}-${diaStr}`;
+    const diaStr = String(dia).padStart(2, '0');
+    const dataISO = `${ano}-${String(mes + 1).padStart(2, '0')}-${diaStr}`;
     const objData = new Date(dataISO + 'T00:00:00');
     const diaSemana = objData.getDay(); // 0 = domingo
 
@@ -312,12 +312,12 @@ window.mostrarCalendarioAdministrador = function() {
  * mostrarDetalhesDoDia(dataISO)
  * Exibe tabela com os agendamentos do dia selecionado.
  */
-window.mostrarDetalhesDoDia = function(dataISO) {
+window.mostrarDetalhesDoDia = function (dataISO) {
   const caixa = document.getElementById('day-details');
   if (!caixa) return;
 
   const lista = pegarListaDeAgendamentos().filter(x => x.data === dataISO)
-    .sort((a,b) => LISTA_DE_HORARIOS_FIXOS.indexOf(a.hora) - LISTA_DE_HORARIOS_FIXOS.indexOf(b.hora));
+    .sort((a, b) => LISTA_DE_HORARIOS_FIXOS.indexOf(a.hora) - LISTA_DE_HORARIOS_FIXOS.indexOf(b.hora));
 
   caixa.dataset.date = dataISO;
 
@@ -409,9 +409,22 @@ dotContainer.addEventListener("click", (e) => {
 });
 
 dotContainer.addEventListener("click", (e) => {
-  if(e.target.classList.contains("dots_dot")){
+  if (e.target.classList.contains("dots_dot")) {
     const slide = e.target.dataset.slide;
     goToSlide(slide);
     activeDot(slide);
   }
 })
+
+const botoes = document.querySelectorAll('.btn2');
+const alvo = document.getElementById('agendamento');
+
+botoes.forEach(botao => {
+  botao.addEventListener('click', (event) => {
+    event.preventDefault(); 
+    alvo.scrollIntoView({
+      behavior: 'smooth', 
+      block: 'start'     
+    });
+  });
+});
